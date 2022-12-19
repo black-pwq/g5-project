@@ -16,3 +16,6 @@ add_library(glad ${CMAKE_SOURCE_DIR}/src/libs/glad.c)
 set_target_properties(glad PROPERTIES FOLDER "lib")
 
 add_subdirectory(./src/test)
+set_target_properties(test PROPERTIES FOLDER "test")
+add_subdirectory(./src/test/app)
+set_target_properties(testapp PROPERTIES FOLDER "test")
