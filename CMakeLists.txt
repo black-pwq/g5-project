@@ -19,3 +19,8 @@ add_subdirectory(./src/test)
 set_target_properties(test PROPERTIES FOLDER "test")
 add_subdirectory(./src/test/app)
 set_target_properties(testapp PROPERTIES FOLDER "test")
+
+add_subdirectory(./src/xmttest) 
+set_target_properties(xmttest PROPERTIES FOLDER "xmttest") 
+add_subdirectory(./src/xmttest/app) 
+set_target_properties(xmttestapp PROPERTIES FOLDER "xmttest") 
