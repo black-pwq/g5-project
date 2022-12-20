@@ -14,8 +14,8 @@ set(source
 add_executable(xmttestapp ${source})
 
 if(MSVC)
-	set_target_properties(testapp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-	target_link_options(testapp PUBLIC /ignore:4099)
+	set_target_properties(xmttestapp PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+	target_link_options(xmttestapp PUBLIC /ignore:4099)
 else()
 	message("Please use Microsoft Visual Studio")
 endif(MSVC)
