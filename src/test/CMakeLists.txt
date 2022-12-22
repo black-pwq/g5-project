@@ -1,22 +1,13 @@
-cmake_minimum_required(VERSION 3.10)
-
 project(test)
+
+set(headers ${CMAKE_SOURCE_DIR}/src/filesys 
+			${CMAKE_SOURCE_DIR}/src/common 
+			${CMAKE_SOURCE_DIR}/src/objloader)
+link_directories(${CMAKE_SOURCE_DIR}/libs)
+include_directories(headers)
 
 set(link_libs glad glfw3)
 link_libraries(${link_libs})
 
-include_directories(${CMAKE_SOURCE_DIR}/src/filesys)
-include_directories(${CMAKE_SOURCE_DIR}/src/common)
-include_directories(${CMAKE_SOURCE_DIR}/src/objloader)
-
 add_executable(test test.cpp)
-
-if(MSVC)
-	set_target_properties(test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-	target_link_options(test PUBLIC /ignore:4099)
-else()
-	message("Please use Microsoft Visual Studio")
-endif(MSVC)
-
-target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/includes)
-target_link_libraries(test ${link_libs})
+msvc_build(test ${headers} ${link_libs})
