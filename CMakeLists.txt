@@ -8,8 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
 
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
+configure_file(config/root_dir.h.in config/root_dir.h)
 
-include_directories(${CMAKE_SOURCE_DIR}/includes)
+include_directories(${CMAKE_SOURCE_DIR}/includes ${CMAKE_BINARY_DIR}/config)
 link_directories(${CMAKE_SOURCE_DIR}/libs)
 
 add_library(glad ${CMAKE_SOURCE_DIR}/src/libs/glad.c)
