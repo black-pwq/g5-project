@@ -1,10 +1,8 @@
 #pragma once
 #include <memory> 
 #include <vector>
-#include <glm/glm.hpp>
+
 #include <glad/glad.h>
-#include "application.h"
-#include "glsl_program.h"
 #include "transform.h"
 #include "vertex.h"
 class Cube {
@@ -24,7 +22,6 @@ public:
 private:
 	// vertices of the table represented in model's own coordinate
 
-	
 	// opengl objects
 	GLuint _vao = 0;
 	GLuint _vbo = 0;

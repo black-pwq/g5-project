@@ -1,5 +1,4 @@
 #include "cube.h"
-#include <glm/ext.hpp>
 
 Cube::Cube(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices)
 	: _vertices(vertices), _indices(indices) {
@@ -29,8 +28,6 @@ Cube::Cube(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& ind
 	glBindVertexArray(0);
 }	
 
-
-
 Cube::~Cube() {
 	if (_ebo != 0) {
 		glDeleteBuffers(1, &_ebo);
@@ -47,7 +44,6 @@ Cube::~Cube() {
 		_vao = 0;
 	}
 }
-
 
 Cube::Cube(Cube&& rhs) noexcept {
 	_vertices = std::move(rhs._vertices);

@@ -1,5 +1,5 @@
 #include "triapp.h"
-#include "objloader.cpp"
+
 
 
 SceneRoaming::SceneRoaming(const Options& options): Application(options) {
@@ -30,11 +30,11 @@ SceneRoaming::SceneRoaming(const Options& options): Application(options) {
 
 	// init model
 	// _bunny.reset(new Model(getAssetFullPath(modelRelPath)));
-	Objloader Objloader;
-	Objloader.loadobj(modelRelPath);
+	// Objloader Objloader;
+	// Objloader.loadobj(modelRelPath);
 			
 
-	_cubes[0].reset(new Cube(Objloader._vertices,Objloader._indices));
+	// _cubes[0].reset(new Cube(Objloader._vertices,Objloader._indices));
 	// _cubes[0]->transform.setFromTRS(glm::mat4(
 	// 	1,0,0,0,
 	// 	0,1,0,1,
@@ -42,8 +42,9 @@ SceneRoaming::SceneRoaming(const Options& options): Application(options) {
 	// 	0,0,0,0
 	// ));
 	// init shader
-	std::cout << "vertices size "<<_cubes[0]->_vertices.size()<<std::endl;
-	std::cout << "indices size "<<_cubes[0]->_indices.size()<<std::endl;
+	// std::cout << "vertices size "<<_cubes[0]->_vertices.size()<<std::endl;
+	// std::cout << "indices size "<<_cubes[0]->_indices.size()<<std::endl;
+
 	// for (int i = 0; i < _cubes[0]->_vertices.size(); i++) {
     //     std::cout << _cubes[0]->_vertices.at(i).position.x<< "  "<< _cubes[0]->_vertices.at(i).position.y<< "  "<< _cubes[0]->_vertices.at(i).position.z << std::endl;
     //     std::cout << _cubes[0]->_vertices.at(i).normal.x<< "  "<< _cubes[0]->_vertices.at(i).normal.y<< "  "<< _cubes[0]->_vertices.at(i).normal.z << std::endl;
@@ -180,7 +181,7 @@ void SceneRoaming::renderFrame() {
 	// std::cout << _cubes[0]->transform.getLocalMatrix()[2][0] << _cubes[0]->transform.getLocalMatrix()[2][1] << std::endl;
 
 	// std::cout << _cubes[0]->transform.getLocalMatrix()[3][0] << _cubes[0]->transform.getLocalMatrix()[3][1] << std::endl;
-	_cubes[0]->draw();
+	// _cubes[0]->draw();
 }
 
 void SceneRoaming::initShader() {
