@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
+
 struct Vertex {
     glm::vec3 position;
     glm::vec3 normal;
@@ -9,12 +10,23 @@ struct Vertex {
 	Vertex() = default;
 	Vertex(const glm::vec3& p, const glm::vec3 n, const glm::vec2 texC) :
 		position(p), normal(n), texCoord(texC) {}
+
 	bool operator==(const Vertex& v) const {
 		return (position == v.position) && 
 			   (normal == v.normal) && 
 			   (texCoord == v.texCoord);
 	}
+	void SetPosition(glm::vec3&p){
+		position = p;
+	}
+	void SetNormal(glm::vec3&n){
+		normal = n;
+	}
+	void SettexCoord(glm::vec2&texC){
+		texCoord = texC;
+	}
 };
+
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>

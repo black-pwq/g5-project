@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "../base/texture.h"
+#include "texture.h"
 
 class FullscreenQuad {
 public:
