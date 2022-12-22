@@ -13,7 +13,7 @@ public:
 public:
 	void setFromTRS(const glm::mat4& trs);
 
-	void lookAt(const glm::vec3& target, const glm::vec3& up = getDefaultUp());
+	void lookAt(const glm::vec3& target, const glm::vec3& up = { 0.0f, 1.0f, 0.0f });
 
 	glm::vec3 getFront() const;
 
@@ -23,15 +23,15 @@ public:
 
 	glm::mat4 getLocalMatrix() const;
 
-	static constexpr glm::vec3 getDefaultFront() {
-		return { 0.0f, 0.0f, -1.0f };
-	}
+	// static constexpr glm::vec3 getDefaultFront() {
+	// 	return { 0.0f, 0.0f, -1.0f };
+	// }
 
-	static constexpr glm::vec3 getDefaultUp() {
-		return { 0.0f, 1.0f, 0.0f };
-	}
+	// static constexpr glm::vec3 getDefaultUp() {
+	// 	return { 0.0f, 1.0f, 0.0f };
+	// }
 
-	static constexpr glm::vec3 getDefaultRight() {
-		return { 1.0f, 0.0f, 0.0f };
-	}
+	// static constexpr glm::vec3 getDefaultRight() {
+	// 	return { 1.0f, 0.0f, 0.0f };
+	// }
 };

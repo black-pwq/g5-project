@@ -6,6 +6,9 @@ set(link_libs glad glfw3)
 link_libraries(${link_libs})
 
 include_directories(${CMAKE_SOURCE_DIR}/src/filesys)
+include_directories(${CMAKE_SOURCE_DIR}/src/common)
+include_directories(${CMAKE_SOURCE_DIR}/src/objloader)
+
 add_executable(test test.cpp)
 
 if(MSVC)

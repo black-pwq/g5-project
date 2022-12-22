@@ -15,15 +15,15 @@ void Transform::lookAt(const glm::vec3& target, const glm::vec3& up) {
 }
 
 glm::vec3 Transform::getFront() const {
-	return rotation * getDefaultFront();
+	return rotation * glm::vec3{ 0.0f, 0.0f, -1.0f };
 }
 
 glm::vec3 Transform::getUp() const{
-	return rotation * getDefaultUp();
+	return rotation * glm::vec3{ 0.0f, 1.0f, 0.0f };
 }
 
 glm::vec3 Transform::getRight() const{
-	return rotation * getDefaultRight();
+	return rotation * glm::vec3{ 1.0f, 0.0f, 0.0f };
 }
 
 glm::mat4 Transform::getLocalMatrix() const {
