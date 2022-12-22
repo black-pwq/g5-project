@@ -1,1 +1,0 @@
-include_directories(${CMAKE_SOURCE_DIR}/includes ${CMAKE_BINARY_DIR}/config)
