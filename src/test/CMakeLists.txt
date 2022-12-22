@@ -5,6 +5,7 @@ project(test)
 set(link_libs glad glfw3)
 link_libraries(${link_libs})
 
+include_directories(${CMAKE_SOURCE_DIR}/src/filesys)
 add_executable(test test.cpp)
 
 if(MSVC)
