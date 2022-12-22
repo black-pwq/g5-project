@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include "root_dir.h"
 
 #include <iostream>
 
@@ -23,7 +24,13 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\n\0";
 
-int main()
+int main() {
+    std::cout << logl_root << std::endl;
+
+    return 0;
+}
+
+int test()
 {
     // glfw: initialize and configure
     // ------------------------------
