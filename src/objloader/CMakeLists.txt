@@ -18,9 +18,7 @@ set(source
 	./objloader.cpp
 	./triapp.cpp 
 	./runtri.cpp)
-# set(source 
-# 	./objloader.cpp
-# 	./triapp.cpp)
+
 add_executable(objloader ${source})
 
 if(MSVC)

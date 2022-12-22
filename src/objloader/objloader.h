@@ -13,7 +13,7 @@ class Objloader {
 public:
 	
     void loadobj(std::string& fillpath);
-
+    void loadobjwithfullpath(std::string& fillpath);
     std::vector<std::string> split(const std::string& str, const std::string& delim); 
         
     std::vector<Vertex> _vertices;

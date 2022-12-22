@@ -26,7 +26,7 @@ SceneRoaming::SceneRoaming(const Options& options): Application(options) {
 		-4.0f * aspect, 4.0f * aspect, -4.0f, 4.0f, znear, zfar));
 	_cameras[1]->transform.position = glm::vec3(0.0f, 0.0f, 15.0f);
 
-	std::string modelRelPath = "cube.obj";
+	std::string modelRelPath = "sphere.obj";
 
 	// init model
 	// _bunny.reset(new Model(getAssetFullPath(modelRelPath)));
