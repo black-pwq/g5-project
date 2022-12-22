@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
-#include "root_dir.h"
+#include "filesystem.h"
 
 #include <iostream>
 
@@ -25,8 +25,8 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "}\n\0";
 
 int main() {
-    std::cout << logl_root << std::endl;
-
+    std::cout << FileSystem::getPathRelativeRoot("src") << std::endl;
+    
     return 0;
 }
 
