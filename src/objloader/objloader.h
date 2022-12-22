@@ -7,8 +7,6 @@
 #include <cstring>
 #include <cstdio> 
 #include "../common/vertex.h"
-#include "root_dir.h"
-
 
 
 class Objloader {

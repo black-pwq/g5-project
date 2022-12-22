@@ -2,21 +2,14 @@
 #pragma once
 #include "objloader.h"
 
-int main() {
-    std::cout << logl_root << std::endl;
-
-    return 0;
-}
-
 void Objloader::loadobj(std::string &fillpath)
 {    
-    // std::cout << "the root is " <<logl_root << std::endl;
 
     std::cout << "try to load  " << std::endl;
 
     std::fstream fin;
 
-    fin.open("E:/tuxing/new/g5-project/src/objloader/obj/cube.obj", std::ios::in);
+    fin.open("media/obj/"+fillpath, std::ios::in);
 
     if (!fin.is_open())
     {

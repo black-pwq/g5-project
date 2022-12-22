@@ -1,5 +1,5 @@
 #include "triapp.h"
-
+#include "objloader.h"
 
 
 SceneRoaming::SceneRoaming(const Options& options): Application(options) {
@@ -26,15 +26,15 @@ SceneRoaming::SceneRoaming(const Options& options): Application(options) {
 		-4.0f * aspect, 4.0f * aspect, -4.0f, 4.0f, znear, zfar));
 	_cameras[1]->transform.position = glm::vec3(0.0f, 0.0f, 15.0f);
 
-	std::string modelRelPath = "obj/cube.obj";
+	std::string modelRelPath = "cube.obj";
 
 	// init model
 	// _bunny.reset(new Model(getAssetFullPath(modelRelPath)));
-	// Objloader Objloader;
-	// Objloader.loadobj(modelRelPath);
+	Objloader Objloader;
+	Objloader.loadobj(modelRelPath);
 			
 
-	// _cubes[0].reset(new Cube(Objloader._vertices,Objloader._indices));
+	_cubes[0].reset(new Cube(Objloader._vertices,Objloader._indices));
 	// _cubes[0]->transform.setFromTRS(glm::mat4(
 	// 	1,0,0,0,
 	// 	0,1,0,1,
@@ -181,7 +181,7 @@ void SceneRoaming::renderFrame() {
 	// std::cout << _cubes[0]->transform.getLocalMatrix()[2][0] << _cubes[0]->transform.getLocalMatrix()[2][1] << std::endl;
 
 	// std::cout << _cubes[0]->transform.getLocalMatrix()[3][0] << _cubes[0]->transform.getLocalMatrix()[3][1] << std::endl;
-	// _cubes[0]->draw();
+	_cubes[0]->draw();
 }
 
 void SceneRoaming::initShader() {

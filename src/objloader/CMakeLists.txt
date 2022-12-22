@@ -7,15 +7,16 @@ link_libraries(${link_libs})
 
 include_directories(${CMAKE_SOURCE_DIR}/src/common)
 include_directories(${CMAKE_SOURCE_DIR}/src/objloader)
+
 set(source 
-	# ${CMAKE_SOURCE_DIR}/src/common/application.cpp 
-	# ${CMAKE_SOURCE_DIR}/src/common/glsl_program.cpp 
-	# ${CMAKE_SOURCE_DIR}/src/common/transform.cpp 
-	# ${CMAKE_SOURCE_DIR}/src/common/camera.cpp 
+	${CMAKE_SOURCE_DIR}/src/common/application.cpp 
+	${CMAKE_SOURCE_DIR}/src/common/glsl_program.cpp 
+	${CMAKE_SOURCE_DIR}/src/common/transform.cpp 
+	${CMAKE_SOURCE_DIR}/src/common/camera.cpp 
 	
-	# ./cube.cpp
-	# ./objloader.cpp
-	# ./triapp.cpp 
+	./cube.cpp
+	./objloader.cpp
+	./triapp.cpp 
 	./runtri.cpp)
 # set(source 
 # 	./objloader.cpp
