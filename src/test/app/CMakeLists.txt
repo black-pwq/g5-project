@@ -1,12 +1,13 @@
 project(testapp)
 
 set(link_libs 	${link_libs} 
-				app)
+				app
+				model)
 link_libraries(${link_libs})
 
 set(source 
 	./triapp.cpp 
 	./runtri.cpp)
 add_executable(testapp ${source})
-
-msvc_build(testapp ${headers} ${link_libs})
+set_target_properties(testapp PROPERTIES FOLDER "test")
+msvc_build(TARGET testapp DIR ${headers_dir} LIB ${link_libs})

@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <filesystem.h>
-#include "../../src/objloader/objloader.h"
+#include "../objloader/objloader.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -25,8 +25,10 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "}\n\0";
 
 int main() {
+    Objloader ld;
     std::cout << FileSystem::getPathRelativeRoot("src") << std::endl;
-    Objloader Objloader;
+    ld.loadobjwithfullpath(FileSystem::getPathRelativeRoot("media/obj/cube.obj"));
+    std::cout << ld._vertices.size() << std::endl;
     return 0;
 }
 
