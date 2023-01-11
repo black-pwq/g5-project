@@ -111,9 +111,9 @@ void Application::framebufferResizeCallback(GLFWwindow* window, int width, int h
 }
 
 void Application::cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
-	Application* app = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window));
-	app->_input.mouse.move.currPos[0] = static_cast<float>(xPos);
-	app->_input.mouse.move.currPos[1] = static_cast<float>(yPos);
+// 	Application* app = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window));
+// 	app->_input.mouse.move.currPos[0] = static_cast<float>(xPos);
+// 	app->_input.mouse.move.currPos[1] = static_cast<float>(yPos);
 }
 
 void Application::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -146,9 +146,9 @@ void Application::mouseButtonCallback(GLFWwindow* window, int button, int action
 }
 
 void Application::scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
-	Application* app = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window));
-	app->_input.mouse.scroll.xOffset = static_cast<float>(xOffset);
-	app->_input.mouse.scroll.yOffset = static_cast<float>(yOffset);
+// 	Application* app = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window));
+// 	app->_input.mouse.scroll.xOffset = static_cast<float>(xOffset);
+// 	app->_input.mouse.scroll.yOffset = static_cast<float>(yOffset);
 }
 
 void Application::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

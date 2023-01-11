@@ -24,6 +24,8 @@ private:
 public:
 	MainApp(const Options& options);
 	~MainApp();
+	void cursorPosCallback(GLFWwindow *window, double x, double y);
+	void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 private:
 	virtual void handleInput();

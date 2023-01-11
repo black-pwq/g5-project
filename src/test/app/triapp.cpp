@@ -7,10 +7,10 @@
 HelloTriangle::HelloTriangle(const Options &options) : Application(options)
 {
 	// setup cursor
-	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	_input.mouse.move.currPos[0] = _input.mouse.move.prevPos[0] = 0.5f * _windowWidth;
-	_input.mouse.move.currPos[1] = _input.mouse.move.prevPos[1] = 0.5f * _windowHeight;
-	glfwSetCursorPos(_window, _input.mouse.move.currPos[0], _input.mouse.move.currPos[1]);
+	// glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	// _input.mouse.move.currPos[0] = _input.mouse.move.prevPos[0] = 0.5f * _windowWidth;
+	// _input.mouse.move.currPos[1] = _input.mouse.move.prevPos[1] = 0.5f * _windowHeight;
+	// glfwSetCursorPos(_window, _input.mouse.move.currPos[0], _input.mouse.move.currPos[1]);
 
 	// create a vertex array object
 	_cube.reset(new Model(getAssetFullPath("obj/cube.obj")));
@@ -63,18 +63,18 @@ void HelloTriangle::handleInput()
 		}
 	}
 
-	for (int i = 0; i < 2; i++)
-	{
-		auto curr = _input.mouse.move.currPos;
-		auto prev = _input.mouse.move.prevPos;
-		if (curr[i] != prev[i])
-		{
-			auto diff = curr[i] - prev[i];
-			float radian = -diff * _deltaTime * _movementFactors[1] / 2;
-			glm::quat old = _camera->transform.rotation;
-			_camera->transform.rotation = glm::quat{glm::cos(radian), sin(radian) * _mouseRotateAxis[i]} * old;
-		}
-	}
+	// for (int i = 0; i < 2; i++)
+	// {
+	// 	auto curr = _input.mouse.move.currPos;
+	// 	auto prev = _input.mouse.move.prevPos;
+	// 	if (curr[i] != prev[i])
+	// 	{
+	// 		auto diff = curr[i] - prev[i];
+	// 		float radian = -diff * _deltaTime * _movementFactors[1] / 2;
+	// 		glm::quat old = _camera->transform.rotation;
+	// 		_camera->transform.rotation = glm::quat{glm::cos(radian), sin(radian) * _mouseRotateAxis[i]} * old;
+	// 	}
+	// }
 
-	_input.forwardState();
+	// _input.forwardState();
 }
