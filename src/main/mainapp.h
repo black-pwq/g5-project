@@ -3,10 +3,10 @@
 #include <memory> 
 #include "application.h"
 #include "glsl_program.h"
-#include "../../model/model.h"
-#include "../../common/camera.h"
+#include "../model/model.h"
+#include "../common/camera.h"
 
-class HelloTriangle : public Application {
+class MainApp : public Application {
 private:
 	int _interests[6] = {
 		GLFW_KEY_W,
@@ -22,11 +22,10 @@ private:
 	std::unique_ptr<GLSLProgram> _shader;
 
 public:
-	HelloTriangle(const Options& options);
-	~HelloTriangle();
+	MainApp(const Options& options);
+	~MainApp();
 
 private:
 	virtual void handleInput();
 	virtual void renderFrame();
-	void moveMouseToDirection();
 };

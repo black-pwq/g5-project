@@ -7,7 +7,8 @@ link_libraries(${link_libs})
 
 set(source 
 	./triapp.cpp 
-	./runtri.cpp)
+	./runtri.cpp
+	../../common/camera.cpp)
 add_executable(testapp ${source})
 set_target_properties(testapp PROPERTIES FOLDER "test")
 msvc_build(TARGET testapp DIR ${headers_dir} LIB ${link_libs})

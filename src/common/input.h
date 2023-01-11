@@ -13,10 +13,8 @@ struct Input {
 		} press;
 
 		struct {
-			float xNow = 0.0f;
-			float yNow = 0.0f;
-			float xOld = 0.0f;
-			float yOld = 0.0f;
+			float currPos[2] = {0.0f, 0.0f};
+			float prevPos[2] = {0.0f, 0.0f};
 		} move;
 
 		struct {
@@ -30,9 +28,8 @@ struct Input {
 	} keyboard;
 
 	void forwardState() {
-		mouse.move.xOld = mouse.move.xNow;
-		mouse.move.yOld = mouse.move.yNow;
-
+		mouse.move.prevPos[0] = mouse.move.currPos[0];
+		mouse.move.prevPos[1] = mouse.move.currPos[1];
 		mouse.scroll.xOffset = 0.0f;
 		mouse.scroll.yOffset = 0.0f;
 	}

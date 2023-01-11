@@ -112,8 +112,8 @@ void Application::framebufferResizeCallback(GLFWwindow* window, int width, int h
 
 void Application::cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
 	Application* app = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window));
-	app->_input.mouse.move.xNow = static_cast<float>(xPos);
-	app->_input.mouse.move.yNow = static_cast<float>(yPos);
+	app->_input.mouse.move.currPos[0] = static_cast<float>(xPos);
+	app->_input.mouse.move.currPos[1] = static_cast<float>(yPos);
 }
 
 void Application::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {

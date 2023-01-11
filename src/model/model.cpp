@@ -1,4 +1,6 @@
 #include <iostream>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include "model.h"
 
 Model::Model(std::string &path) {
@@ -24,6 +26,9 @@ void Model::bindToGLBuffers() {
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
     glEnableVertexAttribArray(2);
+    // for(auto i : _obj._vertices) {
+    //     std::cout << "position " << glm::to_string(i.position) << " " << std::endl; 
+    // }
 }
 
 void Model::draw() {

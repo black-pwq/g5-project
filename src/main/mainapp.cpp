@@ -1,10 +1,10 @@
 #include <iostream>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
-#include "triapp.h"
-#include "../../filesys/filesystem.h"
+#include "mainapp.h"
+#include "../filesys/filesystem.h"
 
-HelloTriangle::HelloTriangle(const Options &options) : Application(options)
+MainApp::MainApp(const Options &options) : Application(options)
 {
 	// setup cursor
 	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -27,9 +27,9 @@ HelloTriangle::HelloTriangle(const Options &options) : Application(options)
 	_shader->link();
 }
 
-HelloTriangle::~HelloTriangle() {}
+MainApp::~MainApp() {}
 
-void HelloTriangle::renderFrame()
+void MainApp::renderFrame()
 {
 	showFpsInWindowTitle();
 
@@ -44,7 +44,7 @@ void HelloTriangle::renderFrame()
 	_cube->draw();
 }
 
-void HelloTriangle::handleInput()
+void MainApp::handleInput()
 {
 	if (_input.keyboard.keyStates[GLFW_KEY_ESCAPE] != GLFW_RELEASE)
 	{
