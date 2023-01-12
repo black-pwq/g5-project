@@ -1,15 +1,15 @@
 
-if(Test-Path -Path build) {
-	rm -r -fo ./build
-}
+# if(Test-Path -Path build) {
+# 	rm -r -fo ./build
+# }
 
-if($?) {
+# if($?) {
 	cmake -Bbuild .
 	if($?) {
 		cd build
 		cmake --build . --parallel 8
 		cd ..
 	}
-} else {
-	echo "---------------------------error above-------------"
-}
+# } else {
+# 	echo "---------------------------error above-------------"
+# }

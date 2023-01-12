@@ -22,10 +22,11 @@ function build() {
 	fi
 }
 
-if [ -d "$builddir" ]; then
-	echo "removing build dir";
-	rm -rf "$builddir";
-	build
-else
-	build
-fi
+build
+# if [ -d "$builddir" ]; then
+# 	echo "removing build dir";
+# 	rm -rf "$builddir";
+# 	build
+# else
+# 	build
+# fi
