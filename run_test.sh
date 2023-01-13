@@ -1,1 +1,1 @@
-./build/bin/Debug/test.exe
+./build/bin/Debug/main.exe
