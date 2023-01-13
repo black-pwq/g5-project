@@ -23,9 +23,6 @@ public:
 	float aspect;
 	float znear;
 	float zfar;
-	static constexpr float maxFovyDegree = 60.0f;
-	static constexpr float defaulfFovyDegree = 45.0f;
-	static constexpr float minFovyDegree = 1.0f;
 public:
 	PerspectiveCamera(float fovy, float aspect, float znear, float zfar);
 

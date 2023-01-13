@@ -14,4 +14,6 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	MainApp *app = reinterpret_cast<MainApp*>(glfwGetWindowUserPointer(window));
+	app->keyCallback(window, key, scancode, action, mods);
 }
