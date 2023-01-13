@@ -98,7 +98,10 @@ void CamApp::keyCallback(GLFWwindow *window, int key, int scancode, int action, 
 		{
 			int cursorMod = glfwGetInputMode(_window, GLFW_CURSOR);
 			if (cursorMod == GLFW_CURSOR_NORMAL)
-				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+				{
+					glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+					_camera->toObserver();
+				}
 			else
 				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			break;
