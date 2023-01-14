@@ -14,10 +14,13 @@ CamApp::CamApp(const Options &options) : Application(options)
 	_input.mouse.position[1] = centerY;
 	glfwSetCursorPos(_window, centerX, centerY);
 
-
-	// create a vertex array object
-	_camera.reset(new OperatableCamera(
-		glm::radians(_camera->defaulfFovyDegree),
+	// init cameras
+	movCam.reset(new MovableCamera(
+		glm::radians(movCam->defaulfFovyDegree),
+		1.0f * _windowWidth / _windowHeight,
+		0.1f, 10000.0f));
+	orbCam.reset(new OrbitCamera(
+		glm::radians(movCam->defaulfFovyDegree),
 		1.0f * _windowWidth / _windowHeight,
 		0.1f, 10000.0f));
 }
@@ -27,13 +30,14 @@ CamApp::~CamApp() {}
 void CamApp::handleInput()
 {
 	// camera movement
-	glm::vec3 _cameraMoveDirs[6] = {_camera->transform.getFront(), -_camera->transform.getRight(), -_camera->transform.getFront(), _camera->transform.getRight(), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)};
+	glm::vec3 _cameraMoveDirs[6] = {movCam->getView(), -movCam->getRight(), -movCam->getView(), movCam->getRight(), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)};
 	for (int i = 0; i < sizeof(_interests) / sizeof(int); i++)
 	{
 		auto key = _interests[i];
 		if (_input.keyboard.keyStates[key] != GLFW_RELEASE)
 		{
-			_camera->move(_cameraMoveDirs[i], _camera->_cameraMoveSpeed * _deltaTime);
+			// std::cout << glm::to_string(_cameraMoveDirs[i]) << std::endl;
+			activeCamera()->move(_cameraMoveDirs[i], movCam->_cameraMoveSpeed * _deltaTime);
 		}
 	}
 }
@@ -46,15 +50,14 @@ void CamApp::cursorPosCallback(GLFWwindow *window, double x, double y)
 	{
 		// in observer mode
 		float offset[2];
-		glm::quat rotation = _camera->transform.rotation;
-		glm::vec3 mouseRotateAxis[2] = {glm::vec3(0.0f, 1.0f, 0.0f), _camera->transform.getRight()};
+		glm::vec3 mouseRotateAxis[2] = {glm::vec3(0.0f, 1.0f, 0.0f), movCam->getRight()};
 		for (int i = 0; i < 2; i++)
 		{
 			offset[i] = static_cast<float>((curr[i] - prev[i]) * _deltaTime);
 			if (offset[i] != 0)
 			{
 				float radian = static_cast<float>(-offset[i] * _mouseMoveSen);
-				_camera->rotate(mouseRotateAxis[i], radian);
+				movCam->rotate(mouseRotateAxis[i], radian);
 			}
 		}
 	}
@@ -62,20 +65,19 @@ void CamApp::cursorPosCallback(GLFWwindow *window, double x, double y)
 	{
 		// pan
 		glm::vec3 disp = glm::vec3(0.0f);
-		glm::vec3 dirs[] = {-_camera->getRight(), _camera->getUp()};
+		glm::vec3 dirs[] = {-orbCam->getRight(), glm::vec3{.0f, 1.0f, .0f}};
 		int windowSize[] = {_windowWidth, _windowHeight};
 		for (int i = 0; i < 2; i++)
 		{
 			auto offset = static_cast<float>((curr[i] - prev[i]) / windowSize[i]);
 			disp += offset * dirs[i];
 		}
-		_camera->pan(disp);
+		orbCam->move(disp);
 	}
-	else if(_input.mouse.press.middle) {
-		// orbit
-		glm::vec3 center = {0.0f, 0.0f, 0.0f};
-		float degree = static_cast<float>(curr[0] - prev[0]);
-		_camera->orbit(center, degree);
+	else if (_input.mouse.press.middle)
+	{
+		orbCam->rotateAzimuth(-static_cast<float>(glm::radians(curr[0] - prev[0]) * _mouseScrollSen));
+		orbCam->rotatePolar(static_cast<float>(glm::radians(curr[1] - prev[1]) * _mouseScrollSen));
 	}
 	prev[0] = x;
 	prev[1] = y;
@@ -83,7 +85,7 @@ void CamApp::cursorPosCallback(GLFWwindow *window, double x, double y)
 
 void CamApp::scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 {
-	_camera->zoom(static_cast<float>(_camera->_mouseScrollSen * yoffset));
+	activeCamera()->zoom(static_cast<float>(activeCamera()->_mouseScrollSen * yoffset));
 }
 
 void CamApp::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -98,16 +100,15 @@ void CamApp::keyCallback(GLFWwindow *window, int key, int scancode, int action, 
 		{
 			int cursorMod = glfwGetInputMode(_window, GLFW_CURSOR);
 			if (cursorMod == GLFW_CURSOR_NORMAL)
-				{
-					glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-					_camera->toObserver();
-				}
+				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			else
+			{
 				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
 			break;
 		}
 		case GLFW_KEY_Z:
-			_camera->zoomToFit();
+			activeCamera()->zoomToFit();
 			break;
 		case GLFW_KEY_ESCAPE:
 			glfwSetWindowShouldClose(_window, true);
@@ -121,4 +122,13 @@ void CamApp::keyCallback(GLFWwindow *window, int key, int scancode, int action, 
 	default:
 		break;
 	}
+}
+
+MovableCamera *CamApp::activeCamera()
+{
+	int cursorMod = glfwGetInputMode(_window, GLFW_CURSOR);
+	if (cursorMod == GLFW_CURSOR_NORMAL)
+		return orbCam.get();
+	else
+		return movCam.get();
 }

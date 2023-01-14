@@ -5,7 +5,6 @@ link_libraries(${link_lib})
 
 set(source ./camapp.cpp 
 			./cameras.cpp 
-			../common/camera.cpp
 			./util.cpp)
 add_library(camapp ${source})
 

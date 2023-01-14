@@ -28,13 +28,14 @@ void MainApp::renderFrame()
 	showFpsInWindowTitle();
 
 	glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	_shader->use();
 	// auto localMat = _cube->transform.getLocalMatrix();
 	_shader->setUniformMat4("model", _cube->transform.getLocalMatrix());
-	_shader->setUniformMat4("view", _camera->getViewMatrix());
-	_shader->setUniformMat4("projection", _camera->getProjectionMatrix());
+	_shader->setUniformMat4("view", activeCamera()->getViewMatrix());
+	_shader->setUniformMat4("projection", activeCamera()->getProjectionMatrix());
 	_cube->draw();
 }
 
