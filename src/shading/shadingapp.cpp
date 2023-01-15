@@ -38,6 +38,9 @@ void ShadingApp::renderFrame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
+	_spotLight->position = activeCamera()->getEye();
+	_spotLight->direction = activeCamera()->getView();
+
 	switch (_renderMode)
 	{
 	case RenderMode::Ambient:
@@ -188,6 +191,9 @@ void ShadingApp::displayImGui()
 		ImGui::SliderFloat("pos.x##3", (float *)&_spotLight->position.x, -100.0f, 100.0f);
 		ImGui::SliderFloat("pos.y##3", (float *)&_spotLight->position.y, -100.0f, 100.0f);
 		ImGui::SliderFloat("pos.z##3", (float *)&_spotLight->position.z, -100.0f, 100.0f);
+		ImGui::SliderFloat("kc##3", (float *)&_spotLight->kc, .0f, 20.0f);
+		ImGui::SliderFloat("kl##3", (float *)&_spotLight->kl, .0f, 20.0f);
+		ImGui::SliderFloat("kq##3", (float *)&_spotLight->kq, .0f, 20.0f);
 		ImGui::NewLine();
 
 		ImGui::End();

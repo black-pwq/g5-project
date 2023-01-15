@@ -8,6 +8,7 @@
 class MainApp : public ShadingApp {
 private:
 	std::unique_ptr<Model> _cube;
+	std::unique_ptr<SimpleMaterial> _simpleMaterial;
 
 public:
 	MainApp(const Options& options);

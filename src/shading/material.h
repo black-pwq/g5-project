@@ -25,3 +25,14 @@ class PhongMaterial {
 struct SimpleMaterial {
 	std::shared_ptr<Texture2D> mapKd;
 };
+
+struct BlendMaterial {
+	glm::vec3 kds[2];
+	std::shared_ptr<Texture2D> mapKds[2];
+	float blend;
+};
+
+struct CheckerMaterial {
+	int repeat;
+	glm::vec3 colors[2];
+};

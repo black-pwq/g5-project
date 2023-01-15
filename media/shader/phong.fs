@@ -1,6 +1,7 @@
 
 #version 330 core
 in vec3 fNormal;
+in vec2 fTexCoord;
 out vec4 color;  
 // material data structure declaration
 struct Material {
@@ -34,16 +35,18 @@ uniform Material material;
 uniform AmbientLight ambientLight;
 uniform DirectionalLight directionalLight;
 uniform SpotLight spotLight;
+uniform sampler2D mapKd;
 
 vec3 calcDirectionalLight(DirectionalLight directionalLight, vec3 normal, vec3 kd, vec3 ks, float ns);
 vec3 calcSpotLight(SpotLight spotLight, vec3 normal, vec3 kd, vec3 ks, float ns);
 vec3 calcAmbientReflect(AmbientLight ambientLight, vec3 ka);
+
 void main() {
     vec3 normal = normalize(fNormal);
 	vec3 ambient = calcAmbientReflect(ambientLight, material.ka);
-	vec3 comb = calcDirectionalLight(directionalLight, normal, material.kd, material.ks, material.ns) + 
-				calcSpotLight(spotLight, normal, material.kd, material.ks, material.ns) + 
-				ambient;
+	vec3 diffuse = calcDirectionalLight(directionalLight, normal, material.kd, material.ks, material.ns);
+	vec3 specular = calcSpotLight(spotLight, normal, material.kd, material.ks, material.ns);
+	vec4 diffspec = vec4(diffuse + specular + ambient, 1.0f);
+	color = texture(mapKd, fTexCoord) * diffspec;
 
-    color = vec4(comb, 1.0f);
 }

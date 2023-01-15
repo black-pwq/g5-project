@@ -3,7 +3,8 @@ project(main)
 set(link_libs 	${link_libs} 
 				shaapp
 				model
-				objld)
+				objld
+				tex2d)
 link_libraries(${link_libs})
 
 set(source 
