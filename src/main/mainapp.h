@@ -1,14 +1,13 @@
 #pragma once
 
 #include <memory> 
-#include "../camapp/camapp.h"
+#include "../shading/shadingapp.h"
 #include "../model/model.h"
 #include "callbacks.h"
 
-class MainApp : public CamApp {
+class MainApp : public ShadingApp {
 private:
 	std::unique_ptr<Model> _cube;
-	std::unique_ptr<GLSLProgram> _shader;
 
 public:
 	MainApp(const Options& options);

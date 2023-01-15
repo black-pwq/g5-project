@@ -1,7 +1,7 @@
 project(main)
 
 set(link_libs 	${link_libs} 
-				camapp
+				shaapp
 				model
 				objld)
 link_libraries(${link_libs})

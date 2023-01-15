@@ -11,9 +11,6 @@ set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
 configure_file(config/root_dir.h.in config/root_dir.h)
 configure_file(config/cmake_vs.sh.in ${CMAKE_SOURCE_DIR}/config/cmake_vs.sh @ONLY)
 
-add_library(glad ${CMAKE_SOURCE_DIR}/src/libs/glad.c)
-set_target_properties(glad PROPERTIES FOLDER "lib")
-
 set(headers_dir ${CMAKE_SOURCE_DIR}/includes ${CMAKE_BINARY_DIR}/config)
 include_directories(${headers_dir})
 set(libs_dir 	${CMAKE_SOURCE_DIR}/libs)

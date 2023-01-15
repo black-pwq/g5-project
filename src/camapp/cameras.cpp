@@ -65,13 +65,14 @@ void OrbitCamera::rotatePolar(const float radians)
     eye = glm::quat{cos(radians), sin(radians) * axis} * t2e + target;
 }
 void OrbitCamera::move(glm::vec3 displacement) {
-    this->displacement += displacement;
+    eye += displacement;
+	target += displacement;
 }
 glm::vec3 OrbitCamera::getEye() const {
-    return eye + displacement;
+    return eye;
 }
 void OrbitCamera::zoomToFit() {
     fovy = defaulfFovyDegree;
-    displacement = {.0f, .0f, .0f};
     eye = {.0f, .0f, 5.0f};
+    target = {.0f, .0f, .0f};
 }

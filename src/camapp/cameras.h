@@ -45,13 +45,12 @@ class MovableCamera : public PerspectiveCamera {
 	MovableCamera(float fovy, float aspect, float znear, float zfar);
 	void rotate(glm::vec3 rotateAxis, float radian);
 	void move(glm::vec3 normalizedDirection, float distance);
-	void move(glm::vec3 displacement);
+	virtual void move(glm::vec3 displacement);
 };
 
 class OrbitCamera : public MovableCamera
 {
 public:
-	glm::vec3 displacement = {.0f, .0f, .0f};
 	OrbitCamera(float fovy, float aspect, float znear, float zfar);
 
 	glm::vec3 getView() const;

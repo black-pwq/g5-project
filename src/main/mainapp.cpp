@@ -4,7 +4,7 @@
 #include "mainapp.h"
 #include "../filesys/filesystem.h"
 
-MainApp::MainApp(const Options &options) : CamApp(options)
+MainApp::MainApp(const Options &options) : ShadingApp(options)
 {	
 	// set callbacks
 	glfwSetCursorPosCallback(_window, ::cursorPosCallback);
@@ -14,29 +14,18 @@ MainApp::MainApp(const Options &options) : CamApp(options)
 	// create a vertex array object
 	_cube.reset(new Model(getAssetFullPath("obj/cube.obj")));
 
-	// create shader
-	_shader.reset(new GLSLProgram);
-	_shader->attachVertexShaderFromFile(getAssetFullPath("shader/test/tri.vs"));
-	_shader->attachFragmentShaderFromFile(getAssetFullPath("shader/test/tri.fs"));
-	_shader->link();
 }
 
 MainApp::~MainApp() {}
 
 void MainApp::renderFrame()
 {
-	showFpsInWindowTitle();
+	ShadingApp::renderFrame();
 
-	glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
-	_shader->use();
-	// auto localMat = _cube->transform.getLocalMatrix();
-	_shader->setUniformMat4("model", _cube->transform.getLocalMatrix());
-	_shader->setUniformMat4("view", activeCamera()->getViewMatrix());
-	_shader->setUniformMat4("projection", activeCamera()->getProjectionMatrix());
+	activeShader()->setUniformMat4("model", _cube->transform.getLocalMatrix());
 	_cube->draw();
+
+	displayImGui();
 }
 
 void MainApp::handleInput()
