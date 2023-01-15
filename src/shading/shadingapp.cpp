@@ -176,8 +176,8 @@ void ShadingApp::displayImGui()
 		ImGui::Separator();
 		ImGui::SliderFloat("intensity##2", &_directionalLight->intensity, 0.0f, 1.0f);
 		ImGui::ColorEdit3("color##2", (float *)&_directionalLight->color);
-		ImGui::SliderFloat("azimuth.x##3", (float *)&_directionalLight->azimuth, .0f, 360.0f);
-		ImGui::SliderFloat("polar.y##3", (float *)&_directionalLight->polar, .0f, 360.0f);
+		ImGui::SliderFloat("azimuth##3", (float *)&_directionalLight->azimuth, .0f, 360.0f);
+		ImGui::SliderFloat("polar##3", (float *)&_directionalLight->polar, .0f, 360.0f);
 		ImGui::NewLine();
 
 		ImGui::Text("spot light");
