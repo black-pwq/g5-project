@@ -5,8 +5,8 @@
 #include <vector>
 
 #include <glad/glad.h>
-#include <stb_image.h>
-#include <stb_image_write.h>
+#include <../libs/stb/stb_image.h>
+#include <../libs/stb/stb_image_write.h>
 
 class Texture {
 public:

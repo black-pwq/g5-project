@@ -215,6 +215,7 @@ void ShadingApp::initPhongShader()
 {
 	_phongShader.reset(new GLSLProgram);
 	_phongShader->attachVertexShaderFromFile(getAssetFullPath("shader/phong.vs"));
+	_phongShader->attachFragmentShaderFromFile(getAssetFullPath("shader/shaderutil.fs"));
 	_phongShader->attachFragmentShaderFromFile(getAssetFullPath("shader/phong.fs"));
 	_phongShader->link();
 }

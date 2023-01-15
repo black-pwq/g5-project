@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "../common/texture2d.h"
 
 class AmbientMaterial {
 	public:
@@ -19,4 +20,8 @@ class PhongMaterial {
 	glm::vec3 kd{1.0f, 1.0f, 1.0f};
 	glm::vec3 ks{1.0f, 1.0f, 1.0f};
 	float ns = 10.0f;
+};
+
+struct SimpleMaterial {
+	std::shared_ptr<Texture2D> mapKd;
 };

@@ -1,6 +1,6 @@
 #include <cassert>
 #include <sstream>
-#include <stb_image.h>
+#include "../libs/stb/stb_image.h"
 
 #include "texture2d.h"
 
