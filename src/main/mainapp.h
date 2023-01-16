@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory> 
+#include <FreeImage.h>
 #include "../texapp/texapp.h"
 #include "../model/model.h"
 #include "callbacks.h"

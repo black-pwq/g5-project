@@ -25,8 +25,8 @@ TexApp::TexApp(const Options &options) : ShadingApp(options)
 	const std::vector<std::string> skyboxTextureRelPaths = {
 		"texture/skybox/Right_Tex.jpg",
 		"texture/skybox/Left_Tex.jpg",
-		"texture/skybox/Up_Tex.jpg",
 		"texture/skybox/Down_Tex.jpg",
+		"texture/skybox/Up_Tex.jpg",
 		"texture/skybox/Front_Tex.jpg",
 		"texture/skybox/Back_Tex.jpg"};
 	std::vector<std::string> skyboxTextureFullPaths;
