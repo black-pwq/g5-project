@@ -135,15 +135,11 @@ void ShadingApp::initLights()
 	// _spotLight->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
-void ShadingApp::displayImGui()
+void ShadingApp::displayImGui(int flags)
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-
-	const auto flags =
-		ImGuiWindowFlags_AlwaysAutoResize |
-		ImGuiWindowFlags_NoSavedSettings;
 
 	if (!ImGui::Begin("Control Panel", nullptr, flags))
 	{
@@ -151,56 +147,60 @@ void ShadingApp::displayImGui()
 	}
 	else
 	{
-		ImGui::Text("Render Mode");
-		ImGui::Separator();
-
-		ImGui::RadioButton("ambient", (int *)&_renderMode, (int)(RenderMode::Ambient));
-		ImGui::ColorEdit3("ka##1", (float *)&_ambientMaterial->ka);
-		ImGui::NewLine();
-
-		ImGui::RadioButton("lambert", (int *)&_renderMode, (int)(RenderMode::Lambert));
-		ImGui::ColorEdit3("kd##2", (float *)&_lambertMaterial->kd);
-		ImGui::NewLine();
-
-		ImGui::RadioButton("phong", (int *)&_renderMode, (int)(RenderMode::Phong));
-		ImGui::ColorEdit3("ka##3", (float *)&_phongMaterial->ka);
-		ImGui::ColorEdit3("kd##3", (float *)&_phongMaterial->kd);
-		ImGui::ColorEdit3("ks##3", (float *)&_phongMaterial->ks);
-		ImGui::SliderFloat("ns##3", &_phongMaterial->ns, 1.0f, 50.0f);
-		ImGui::NewLine();
-
-		ImGui::Text("ambient light");
-		ImGui::Separator();
-		ImGui::SliderFloat("intensity##1", &_ambientLight->intensity, 0.0f, 1.0f);
-		ImGui::ColorEdit3("color##1", (float *)&_ambientLight->color);
-		ImGui::NewLine();
-
-		ImGui::Text("directional light");
-		ImGui::Separator();
-		ImGui::SliderFloat("intensity##2", &_directionalLight->intensity, 0.0f, 1.0f);
-		ImGui::ColorEdit3("color##2", (float *)&_directionalLight->color);
-		ImGui::SliderFloat("azimuth##3", (float *)&_directionalLight->azimuth, .0f, 360.0f);
-		ImGui::SliderFloat("polar##3", (float *)&_directionalLight->polar, .0f, 360.0f);
-		ImGui::NewLine();
-
-		ImGui::Text("spot light");
-		ImGui::Separator();
-		ImGui::SliderFloat("intensity##3", &_spotLight->intensity, 0.0f, 1.0f);
-		ImGui::ColorEdit3("color##3", (float *)&_spotLight->color);
-		ImGui::SliderFloat("angle##3", (float *)&_spotLight->angle, 0.0f, glm::radians(180.0f), "%f rad");
-		ImGui::SliderFloat("pos.x##3", (float *)&_spotLight->position.x, -100.0f, 100.0f);
-		ImGui::SliderFloat("pos.y##3", (float *)&_spotLight->position.y, -100.0f, 100.0f);
-		ImGui::SliderFloat("pos.z##3", (float *)&_spotLight->position.z, -100.0f, 100.0f);
-		ImGui::SliderFloat("kc##3", (float *)&_spotLight->kc, .0f, 20.0f);
-		ImGui::SliderFloat("kl##3", (float *)&_spotLight->kl, .0f, 20.0f);
-		ImGui::SliderFloat("kq##3", (float *)&_spotLight->kq, .0f, 20.0f);
-		ImGui::NewLine();
-
+		insertImGui();
 		ImGui::End();
 	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ShadingApp::insertImGui()
+{
+	ImGui::Text("Render Mode");
+	ImGui::Separator();
+
+	ImGui::RadioButton("ambient", (int *)&_renderMode, (int)(RenderMode::Ambient));
+	ImGui::ColorEdit3("ka##1", (float *)&_ambientMaterial->ka);
+	ImGui::NewLine();
+
+	ImGui::RadioButton("lambert", (int *)&_renderMode, (int)(RenderMode::Lambert));
+	ImGui::ColorEdit3("kd##2", (float *)&_lambertMaterial->kd);
+	ImGui::NewLine();
+
+	ImGui::RadioButton("phong", (int *)&_renderMode, (int)(RenderMode::Phong));
+	ImGui::ColorEdit3("ka##3", (float *)&_phongMaterial->ka);
+	ImGui::ColorEdit3("kd##3", (float *)&_phongMaterial->kd);
+	ImGui::ColorEdit3("ks##3", (float *)&_phongMaterial->ks);
+	ImGui::SliderFloat("ns##3", &_phongMaterial->ns, 1.0f, 50.0f);
+	ImGui::NewLine();
+
+	ImGui::Text("ambient light");
+	ImGui::Separator();
+	ImGui::SliderFloat("intensity##1", &_ambientLight->intensity, 0.0f, 1.0f);
+	ImGui::ColorEdit3("color##1", (float *)&_ambientLight->color);
+	ImGui::NewLine();
+
+	ImGui::Text("directional light");
+	ImGui::Separator();
+	ImGui::SliderFloat("intensity##2", &_directionalLight->intensity, 0.0f, 1.0f);
+	ImGui::ColorEdit3("color##2", (float *)&_directionalLight->color);
+	ImGui::SliderFloat("azimuth##3", (float *)&_directionalLight->azimuth, .0f, 360.0f);
+	ImGui::SliderFloat("polar##3", (float *)&_directionalLight->polar, .0f, 360.0f);
+	ImGui::NewLine();
+
+	ImGui::Text("spot light");
+	ImGui::Separator();
+	ImGui::SliderFloat("intensity##3", &_spotLight->intensity, 0.0f, 1.0f);
+	ImGui::ColorEdit3("color##3", (float *)&_spotLight->color);
+	ImGui::SliderFloat("angle##3", (float *)&_spotLight->angle, 0.0f, glm::radians(180.0f), "%f rad");
+	ImGui::SliderFloat("pos.x##3", (float *)&_spotLight->position.x, -100.0f, 100.0f);
+	ImGui::SliderFloat("pos.y##3", (float *)&_spotLight->position.y, -100.0f, 100.0f);
+	ImGui::SliderFloat("pos.z##3", (float *)&_spotLight->position.z, -100.0f, 100.0f);
+	ImGui::SliderFloat("kc##3", (float *)&_spotLight->kc, .0f, 20.0f);
+	ImGui::SliderFloat("kl##3", (float *)&_spotLight->kl, .0f, 20.0f);
+	ImGui::SliderFloat("kq##3", (float *)&_spotLight->kq, .0f, 20.0f);
+	ImGui::NewLine();
 }
 
 void ShadingApp::initAmbientShader()

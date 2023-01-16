@@ -4,31 +4,21 @@
 #include "mainapp.h"
 #include "../filesys/filesystem.h"
 
-MainApp::MainApp(const Options &options) : ShadingApp(options)
-{	
+MainApp::MainApp(const Options &options) : TexApp(options)
+{
 	// set callbacks
 	glfwSetCursorPosCallback(_window, ::cursorPosCallback);
 	glfwSetScrollCallback(_window, ::scrollCallback);
 	glfwSetKeyCallback(_window, ::keyCallback);
 
 	// create a vertex array object
-	_cube.reset(new Model(getAssetFullPath("obj/cube.obj")));
-
-	std::shared_ptr<Texture2D> cubeTex =
-		std::make_shared<ImageTexture2D>(getAssetFullPath("texture/container.jpg"));
-	_simpleMaterial.reset(new SimpleMaterial);
-	_simpleMaterial->mapKd = cubeTex;
 }
 
 MainApp::~MainApp() {}
 
 void MainApp::renderFrame()
 {
-	ShadingApp::renderFrame();
-
-	activeShader()->setUniformMat4("model", _cube->transform.getLocalMatrix());
-	_simpleMaterial->mapKd->bind();
-	_cube->draw();
+	TexApp::renderFrame();
 
 	displayImGui();
 }
@@ -36,4 +26,14 @@ void MainApp::renderFrame()
 void MainApp::handleInput()
 {
 	CamApp::handleInput();
+}
+
+void MainApp::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	CamApp::keyCallback(window, key, scancode, action, mods);
+	if(action == GLFW_PRESS) {
+		if(key == GLFW_KEY_Q) {
+			std::cout << "call screen shot func" << std::endl;
+		}
+	}
+
 }

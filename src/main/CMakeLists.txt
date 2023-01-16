@@ -1,7 +1,7 @@
 project(main)
 
 set(link_libs 	${link_libs} 
-				shaapp
+				texapp
 				model
 				objld
 				tex2d)

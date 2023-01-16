@@ -44,9 +44,8 @@ vec3 calcAmbientReflect(AmbientLight ambientLight, vec3 ka);
 void main() {
     vec3 normal = normalize(fNormal);
 	vec3 ambient = calcAmbientReflect(ambientLight, material.ka);
-	vec3 diffuse = calcDirectionalLight(directionalLight, normal, material.kd, material.ks, material.ns);
-	vec3 specular = calcSpotLight(spotLight, normal, material.kd, material.ks, material.ns);
-	vec4 diffspec = vec4(diffuse + specular + ambient, 1.0f);
-	color = texture(mapKd, fTexCoord) * diffspec;
-
+	vec3 dir = calcDirectionalLight(directionalLight, normal, material.kd, material.ks, material.ns);
+	vec3 spec = calcSpotLight(spotLight, normal, material.kd, material.ks, material.ns);
+	vec4 comb = vec4(dir + spec + ambient, 1.0f);
+	color = texture(mapKd, fTexCoord) * comb;
 }

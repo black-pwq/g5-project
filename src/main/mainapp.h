@@ -1,20 +1,19 @@
 #pragma once
 
 #include <memory> 
-#include "../shading/shadingapp.h"
+#include "../texapp/texapp.h"
 #include "../model/model.h"
 #include "callbacks.h"
 
-class MainApp : public ShadingApp {
+class MainApp : public TexApp {
 private:
-	std::unique_ptr<Model> _cube;
-	std::unique_ptr<SimpleMaterial> _simpleMaterial;
 
 public:
 	MainApp(const Options& options);
 	~MainApp();
 
-private:
+protected:
 	virtual void handleInput();
 	virtual void renderFrame();
+	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
