@@ -6,12 +6,12 @@
 TexApp::TexApp(const Options &options) : ShadingApp(options)
 {
 	// create a vertex array object
-	_cube.reset(new Model(getAssetFullPath("obj/cube.obj")));
+	_sphere.reset(new Model(getAssetFullPath("obj/sphere.obj")));
 
 	std::shared_ptr<Texture2D> cubeTex =
-		std::make_shared<ImageTexture2D>(getAssetFullPath("texture/container.jpg"));
+		std::make_shared<ImageTexture2D>(getAssetFullPath("texture/miscellaneous/earthmap.jpg"));
 	std::shared_ptr<Texture2D> faceTex =
-		std::make_shared<ImageTexture2D>(getAssetFullPath("texture/awesomeface.png"));
+		std::make_shared<ImageTexture2D>(getAssetFullPath("texture/miscellaneous/planet_Quom1200.png"));
 	_simpleMaterial.reset(new SimpleMaterial);
 	_simpleMaterial->mapKd = cubeTex;
 
@@ -43,7 +43,7 @@ void TexApp::renderFrame()
 {
 	ShadingApp::renderFrame();
 
-	activeShader()->setUniformMat4("model", _cube->transform.getLocalMatrix());
+	activeShader()->setUniformMat4("model", _sphere->transform.getLocalMatrix());
 	switch (_texMode)
 	{
 	case TexMode::Simple:
@@ -70,7 +70,7 @@ void TexApp::renderFrame()
 	default:
 		break;
 	}
-	_cube->draw();
+	_sphere->draw();
 	_skybox->draw(activeCamera()->getProjectionMatrix(), activeCamera()->getViewMatrix());
 
 	displayImGui();

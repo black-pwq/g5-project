@@ -11,7 +11,7 @@ enum class TexMode {
 
 class TexApp : public ShadingApp {
 protected:
-	std::unique_ptr<Model> _cube;
+	std::unique_ptr<Model> _sphere;
 	std::unique_ptr<SimpleMaterial> _simpleMaterial;
 	std::unique_ptr<BlendMaterial> _blendMaterial;
 	std::unique_ptr<SkyBox> _skybox;
