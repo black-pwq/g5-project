@@ -1,11 +1,343 @@
 
 #pragma once
 #include "objloader.h"
+void Objloader::loadcube(){
+    
+    _vertices.clear();
+    _indices.clear();
+
+    std::vector<glm::vec3> vert;
+    std::vector<Vertex> verts;
+    std::vector<uint32_t> inds;
+    std::vector<int> ind = {1,2,4,3   ,3,4,6,5   ,5,6,8,7    ,7,8,2,1   ,2,8,6,4    ,7,1,3,5};
+    vert.push_back(glm::vec3(-0.5,-0.5,0.5));
+    vert.push_back(glm::vec3(0.5,-0.5,0.5));
+    vert.push_back(glm::vec3(-0.5,0.5,0.5));
+    vert.push_back(glm::vec3(0.5,0.5,0.5));
+    vert.push_back(glm::vec3(-0.5,0.5,-0.5));
+    vert.push_back(glm::vec3(0.5,0.5,-0.5));
+    vert.push_back(glm::vec3(-0.5,-0.5,-0.5));
+    vert.push_back(glm::vec3(0.5,-0.5,-0.5));
+    
+    for (int i = 0;i < 6;i++){
+
+        glm::vec3 normal = glm::cross((vert.at(ind.at(4*i)-1)-vert.at(ind.at(4*i+1)-1)),  (vert.at(ind.at(4*i+1)-1)-vert.at(ind.at(4*i+2)-1)));
+        inds.push_back(4*i);
+        inds.push_back(4*i+2);
+        inds.push_back(4*i+1);
+        inds.push_back(4*i);
+        inds.push_back(4*i+3);
+        inds.push_back(4*i+2);
+        for(int j = 0;j < 4;j++){
+            Vertex temp;
+            temp.SetPosition(vert.at(ind.at(4*i+j)-1));
+            temp.SetNormal(normal);
+            verts.push_back(temp);
+            
+        }
+
+    }
+
+    _vertices.swap(verts);
+    _indices.swap(inds);
+
+    
+    
+}
+void Objloader::loadball(){
+    _vertices.clear();
+    _indices.clear();
+    std::vector<Vertex> sphereVertices;
+	std::vector<uint32_t> sphereIndices;
+    float PI = 3.141592653589793;
+	int Y_SEGMENTS = 50;
+    int X_SEGMENTS = 50;
+	for (int y=0;y<=Y_SEGMENTS;y++)
+	{
+		for (int x=0;x<=X_SEGMENTS;x++)
+		{
+            Vertex temp;
+			float xSegment = (float)x / (float)X_SEGMENTS;
+			float ySegment = (float)y / (float)Y_SEGMENTS;
+			float xPos = std::cos(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+			float yPos = std::cos(ySegment * PI);
+			float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+			temp.SetPosition(glm::vec3(xPos,yPos,zPos));
+            sphereVertices.push_back(temp);
+		}
+	}
+
+
+	//生成球的Indices
+	for (int i=0;i<Y_SEGMENTS;i++)
+	{
+		for (int j=0;j<X_SEGMENTS;j++)
+		{
+
+            glm::vec3 normal = glm::cross((sphereVertices.at(i * (X_SEGMENTS + 1) + j).position-sphereVertices.at((i + 1) * (X_SEGMENTS + 1) + j).position),(sphereVertices.at(i * (X_SEGMENTS + 1) + j).position-sphereVertices.at((i + 1) * (X_SEGMENTS + 1) + j+1).position));
+            sphereVertices.at(i * (X_SEGMENTS + 1) + j).SetNormal(normal);
+            sphereVertices.at((i + 1) * (X_SEGMENTS + 1) + j).SetNormal(normal);
+            sphereVertices.at((i + 1) * (X_SEGMENTS + 1) + j+1).SetNormal(normal);
+            sphereVertices.at(i* (X_SEGMENTS + 1) + j).SetNormal(normal);
+            sphereVertices.at((i + 1) * (X_SEGMENTS + 1) + j + 1).SetNormal(normal);
+            sphereVertices.at(i * (X_SEGMENTS + 1) + j + 1).SetNormal(normal);
+
+			sphereIndices.push_back(i * (X_SEGMENTS + 1) + j);
+			sphereIndices.push_back((i + 1) * (X_SEGMENTS + 1) + j);
+			sphereIndices.push_back((i + 1) * (X_SEGMENTS + 1) + j+1);
+			sphereIndices.push_back(i* (X_SEGMENTS + 1) + j);
+			sphereIndices.push_back((i + 1) * (X_SEGMENTS + 1) + j + 1);
+			sphereIndices.push_back(i * (X_SEGMENTS + 1) + j + 1);
+        
+        }
+	}
+    _vertices.swap(sphereVertices);
+    _indices.swap(sphereIndices);
+
+}
+void Objloader::loadcylinder(){
+
+    _vertices.clear();
+    _indices.clear();
+
+    const int sectorCount = 36; 
+    const float pierRadius = 2.0f;
+    const float pierHeight = 5.0f;
+    const float PI = 3.1415926f;
+	float sectorStep = 2 * PI / sectorCount;
+	float sectorAngle = 0.0f;
+    std::vector<Vertex> unitVertices;
+    std::cout <<" start build" << std::endl;
+
+	{
+        glm::vec3 position;
+        glm::vec3 normal;
+        Vertex tVertex;
+
+        for (int i = 0; i <= sectorCount; ++i)
+        {
+            sectorAngle = i * sectorStep;
+            position.x = pierRadius * cos(sectorAngle);
+            position.y = 0.0f;
+            position.z = pierRadius * sin(sectorAngle);
+
+            normal.x = cos(sectorAngle);
+            normal.y = 0.0f;
+            normal.z = sin(sectorAngle);
+
+            tVertex.position = position;
+            tVertex.normal = normal;
+
+            unitVertices.push_back(tVertex);
+        }
+    }
+	
+	// 获取上、下圆周点数组
+	std::vector<Vertex> vctTop;
+	std::vector<Vertex> vctBot;
+
+	Vertex tVertex;
+	for(int i = 0; i < unitVertices.size(); ++i)
+	{
+		tVertex.position = unitVertices[i].position;
+		tVertex.position.y = pierHeight;
+		tVertex.normal = unitVertices[i].normal;
+		vctTop.push_back(tVertex);  
+
+		tVertex.position.y = 0.0f;
+		vctBot.push_back(tVertex);     
+	}
+
+	assert(vctTop.size() >= 2);
+	assert(vctBot.size() >= 2);
+
+	// 圆柱侧面
+	for(int i = 0; i < vctTop.size() - 1; ++i)
+	{
+		// 左三角形
+		_vertices.push_back(vctTop[i]);
+		_vertices.push_back(vctBot[i]);
+		_vertices.push_back(vctBot[i+1]);
+		
+		// 右三角形
+		_vertices.push_back(vctTop[i]);
+		_vertices.push_back(vctTop[i+1]);
+		_vertices.push_back(vctBot[i+1]);
+	}
+	
+	// 顶部圆形
+	glm::vec3 position;
+	for (int i = 0; i < vctTop.size() - 1; ++i)
+	{
+		glm::vec3 position(0.0f, pierHeight, 0.0f);
+		glm::vec3 normal(0.0f, 1.0f, 0.0f);
+		tVertex.position = position;
+		tVertex.normal = normal;
+		_vertices.push_back(tVertex);
+
+		tVertex.position = vctTop[i].position;
+		_vertices.push_back(tVertex);
+
+		tVertex.position = vctTop[i+1].position;
+		_vertices.push_back(tVertex);
+	}
+
+	// 底部圆形
+	for (int i = 0; i < vctBot.size() - 1; ++i)
+	{
+		glm::vec3 position(0.0f, 0.0f, 0.0f);
+		glm::vec3 normal(0.0f, -1.0f, 0.0f);
+		tVertex.position = position;
+		tVertex.normal = normal;
+		_vertices.push_back(tVertex);
+
+		tVertex.position = vctBot[i].position;
+		_vertices.push_back(tVertex);
+
+		tVertex.position = vctBot[i+1].position;
+		_vertices.push_back(tVertex);
+	}
+    for(int i = 0;i < _vertices.size();i++){
+        _indices.push_back(i);
+    }
+    std::cout <<_indices.size() << std::endl;
+
+}
+
+
+
+void Objloader::loadcone(){
+    _vertices.clear();
+    _indices.clear();
+    const int sectorCount = 36; 
+    const float pierRadius = 2.0f;
+    const float pierHeight = 5.0f;
+    const float PI = 3.1415926f;
+	float sectorStep = 2 * PI / sectorCount;
+	float sectorAngle = 0.0f;
+    std::vector<Vertex> unitVertices;
+    std::cout <<" start build" << std::endl;
+
+	{
+        glm::vec3 position;
+        glm::vec3 normal;
+        Vertex tVertex;
+
+        for (int i = 0; i <= sectorCount; ++i)
+        {
+            sectorAngle = i * sectorStep;
+            position.x = pierRadius * cos(sectorAngle);
+            position.y = 0.0f;
+            position.z = pierRadius * sin(sectorAngle);
+            tVertex.position = position;
+        
+            unitVertices.push_back(tVertex);
+        }
+
+    }
+
+}
+
+void Objloader::loadMultisidedprisms(){
+    _vertices.clear();
+    _indices.clear();
+}
+
+void Objloader::exportobj(std::vector<Vertex> vertices,std::vector<uint32_t> indices,std::string &filename){
+    std::cout<< "start export  " << std::endl;
+
+    std::ofstream outfile("media/obj/exportobj/"+filename,std::ios::ate);
+    if(outfile.is_open()){
+        std::cout << "export file found" << std::endl;
+        int isfour = 0;
+        if(indices.size()*2 == vertices.size()*3){
+
+            std::cout << "isfourv" << std::endl;
+            
+            std::vector<glm::vec3> vec;
+
+            for(int i = 0;i < indices.size();i+=6){
+                vec.push_back(glm::vec3((float)indices.at(i)+1,(float)indices.at(i)+1,(float)indices.at(i)+1));
+                vec.push_back(glm::vec3((float)indices.at(i+1)+1,(float)indices.at(i+1)+1,(float)indices.at(i+1)+1));
+                vec.push_back(glm::vec3((float)indices.at(i+4)+1,(float)indices.at(i+4)+1,(float)indices.at(i+4)+1));
+                vec.push_back(glm::vec3((float)indices.at(i+5)+1,(float)indices.at(i+5)+1,(float)indices.at(i+5)+1));
+            }
+            
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "v " + std::to_string(vertices.at(vec.at(i).x-1).position.x) +" " + std::to_string(vertices.at(vec.at(i).x-1).position.y)+" "+std::to_string(vertices.at(vec.at(i).x-1).position.z)<< std::endl;
+
+            }
+
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "vt " + std::to_string(vertices.at(vec.at(i).y-1).texCoord.x) +" " + std::to_string(vertices.at(vec.at(i).y-1).texCoord.y)<< std::endl;
+
+            }
+
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "vn " + std::to_string(vertices.at(vec.at(i).z-1).normal.x) +" " + std::to_string(vertices.at(vec.at(i).z-1).normal.y)+" "+std::to_string(vertices.at(vec.at(i).z-1).normal.z)<< std::endl;
+
+            }
+            for(int i = 0;i < vec.size();i+=4){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "f " + std::to_string((int)vec.at(i).x) +"/" + std::to_string((int)vec.at(i).y)+"/"+std::to_string((int)vec.at(i).z)+" "+std::to_string((int)vec.at(i+1).x) +"/" + std::to_string((int)vec.at(i+1).y)+"/"+std::to_string((int)vec.at(i+1).z) +" "+ std::to_string((int)vec.at(i+2).x) +"/" + std::to_string((int)vec.at(i+2).y)+"/"+std::to_string((int)vec.at(i+2).z)+" "+std::to_string((int)vec.at(i+3).x) +"/" + std::to_string((int)vec.at(i+3).y)+"/"+std::to_string((int)vec.at(i+3).z) +" "<< std::endl;
+
+            }
+
+        }
+        else{
+            std::cout << "isthreev" << std::endl;
+            std::vector<int> v;
+            std::vector<int> vt;
+            std::vector<int> vn;
+           
+            std::vector<glm::vec3> vec;
+
+            for(int i = 0;i < indices.size();i+=3){
+                vec.push_back(glm::vec3((float)indices.at(i)+1,(float)indices.at(i)+1,(float)indices.at(i)+1));
+                vec.push_back(glm::vec3((float)indices.at(i+1)+1,(float)indices.at(i+1)+1,(float)indices.at(i+1)+1));
+                vec.push_back(glm::vec3((float)indices.at(i+2)+1,(float)indices.at(i+2)+1,(float)indices.at(i+2)+1));
+            }
+            
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "v " + std::to_string(vertices.at(vec.at(i).x-1).position.x) +" " + std::to_string(vertices.at(vec.at(i).x-1).position.y)+" "+std::to_string(vertices.at(vec.at(i).x-1).position.z)<< std::endl;
+
+            }
+
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "vt " + std::to_string(vertices.at(vec.at(i).y-1).texCoord.x) +" " + std::to_string(vertices.at(vec.at(i).y-1).texCoord.y)<< std::endl;
+
+            }
+
+            for(int i = 0;i < vec.size();i++){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "vn " + std::to_string(vertices.at(vec.at(i).z-1).normal.x) +" " + std::to_string(vertices.at(vec.at(i).z-1).normal.y)+" "+std::to_string(vertices.at(vec.at(i).z-1).normal.z)<< std::endl;
+
+            }
+            for(int i = 0;i < vec.size();i+=3){
+                // outfile << "v" + std::to_string(vertices.at(vec.at(i).x)) << std::endl;
+                outfile << "f " + std::to_string((int)vec.at(i).x) +"/" + std::to_string((int)vec.at(i).y)+"/"+std::to_string((int)vec.at(i).z)+" "+std::to_string((int)vec.at(i+1).x) +"/" + std::to_string((int)vec.at(i+1).y)+"/"+std::to_string((int)vec.at(i+1).z) +" "+ std::to_string((int)vec.at(i+2).x) +"/" + std::to_string((int)vec.at(i+2).y)+"/"+std::to_string((int)vec.at(i+2).z)+" "<< std::endl;
+
+            }
+
+        }
+
+        outfile.close();
+    }
+    std::cout <<  "fin export" << std::endl;
+
+}
 
 void Objloader::loadobj(std::string &fillpath)
 {    
+    _vertices.clear();
+    _indices.clear();
 
-    std::cout << "try to load  " << std::endl;
+    // std::cout << "try to load  " << std::endl;
 
     std::fstream fin;
 
@@ -24,11 +356,12 @@ void Objloader::loadobj(std::string &fillpath)
     std::vector<glm::vec3> vn;
     std::vector<glm::vec2> vt;
 
+
     std::cout << "start load " << _vertices.size() << std::endl;
 
     while (getline(fin, buff))
     {
-
+        
         std::vector<std::string> temp = split(buff, " ");
         // std::cout  << "  " <<temp.size() <<std::endl;
 
@@ -267,6 +600,7 @@ void Objloader::loadobj(std::string &fillpath)
                 }
             }
         }
+
     }
     // std::cout <<vsum<< " "<<vtsum << " "<< vnsum << " "<< std::endl;
 
@@ -279,15 +613,17 @@ void Objloader::loadobj(std::string &fillpath)
     // for (int i = 0; i < _indices.size(); i++) {
     //     std::cout << _indices.at(i) << std::endl;
     // }
-    fin.close();
 
+    fin.close();
+    std::cout<< "fin load " << std::endl;
     return;
 };
 
 
 void Objloader::loadobjwithfullpath(std::string &fillpath)
 {    
-
+    _vertices.clear();
+    _indices.clear();
     std::cout << "try to load  " << std::endl;
 
     std::fstream fin;
@@ -563,6 +899,8 @@ void Objloader::loadobjwithfullpath(std::string &fillpath)
     //     std::cout << _indices.at(i) << std::endl;
     // }
     fin.close();
+        std::cout<< "fin load " << std::endl;
+
 
     return;
 };
@@ -589,4 +927,6 @@ std::vector<std::string> Objloader::split(const std::string &str, const std::str
 
     return res;
 }
+
+
 
