@@ -45,9 +45,7 @@ protected:
 	virtual void handleInput();
 	virtual void renderFrame();
 	virtual void insertImGui();
-	virtual void displayImGui(int flags =
-		ImGuiWindowFlags_AlwaysAutoResize |
-		ImGuiWindowFlags_NoSavedSettings);
+	virtual void displayImGui();
 	void initLights();
 	void initMaterial();
 	// I = ka * albedo
