@@ -21,6 +21,20 @@ TexApp::TexApp(const Options &options) : ShadingApp(options)
 	_blendMaterial->mapKds[0] = cubeTex;
 	_blendMaterial->mapKds[1] = faceTex;
 	_blendMaterial->blend = 0.0f;
+
+	const std::vector<std::string> skyboxTextureRelPaths = {
+		"texture/skybox/Right_Tex.jpg",
+		"texture/skybox/Left_Tex.jpg",
+		"texture/skybox/Up_Tex.jpg",
+		"texture/skybox/Down_Tex.jpg",
+		"texture/skybox/Front_Tex.jpg",
+		"texture/skybox/Back_Tex.jpg"};
+	std::vector<std::string> skyboxTextureFullPaths;
+	for (size_t i = 0; i < skyboxTextureRelPaths.size(); ++i)
+	{
+		skyboxTextureFullPaths.push_back(getAssetFullPath(skyboxTextureRelPaths[i]));
+	}
+	_skybox.reset(new SkyBox(skyboxTextureFullPaths));
 }
 
 TexApp::~TexApp() {}
@@ -57,6 +71,7 @@ void TexApp::renderFrame()
 		break;
 	}
 	_cube->draw();
+	_skybox->draw(activeCamera()->getProjectionMatrix(), activeCamera()->getViewMatrix());
 
 	displayImGui();
 }
